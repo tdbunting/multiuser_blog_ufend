@@ -1,0 +1,51 @@
+{% extends "app.html" %}
+{% block content %}
+<div class="col-md-6 offset-md-3">
+  <h2>Sign Up!</h2>
+    <form method="post">
+
+      {% if error_username %}
+        {% set username_class = "has-danger" %}
+      {% endif %}
+      <div class="form-group {{username_class}}">
+        <label class="form-control-label" for="username">Username</label>
+        <input name="username" type="text" class="form-control" id="username" placeholder="Username">
+        <div class="form-control-feedback">{{error_username}}</div>
+      </div>
+
+      {% if error_email %}
+        {% set email_class = "has-danger" %}
+      {% endif %}
+      <div class="form-group {{email_class}}">
+        <label class="form-control-label" for="email">Email Address</label>
+        <input name="email" type="text" class="form-control" id="email" placeholder="Email Address">
+        <div class="form-control-feedback">{{error_email}}</div>
+      </div>
+
+      {% if error_password %}
+        {% set password_class = "has-danger" %}
+      {% endif %}
+      <div class="form-group {{password_class}}">
+        <label class="form-control-label" for="password">Password</label>
+        <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+        <div class="form-control-feedback">{{error_password}}</div>
+      </div>
+
+      {% if error_password %}
+        {% set verify_class = "has-danger" %}
+      {% endif %}
+      <div class="form-group {{verify_class}}">
+
+        <input name="verify" type="password" class="form-control" id="verify" placeholder="Verify Password">
+        <div class="form-control-feedback">{{error_verify}}</div>
+      </div>
+
+      <p>
+        Already have an account?
+        <a href="/login">Click here to Login</a>
+      </p>
+
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+  </div>
+{% endblock %}

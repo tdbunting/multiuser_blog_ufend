@@ -1,0 +1,27 @@
+{% extends "app.html" %}
+{% block content %}
+
+  <div class="row">
+    {% set post_id = post.key().id() %}
+    <div class="blog-post col-md-10 offset-md-1">
+      <h2 class="blog-post-title">{{post.subject}}</h2>
+      <p class="blog-post-meta">{{post.created.strftime("%b %d, %Y")}} by <a href="#">{{post.author.username}}</a></p>
+      <p>{{post.content | safe}}</p>
+    </div><!-- /.blog-post -->
+  </div>
+
+  <div class="row edit-nav">
+    <div class="col-6 col-sm-5 offset-sm-1">
+      <a href="/blog" class="btn btn-primary">Back</a>
+    </div>
+    {% if can_edit %}
+      <div class="col-6 col-sm-5 text-right">
+      <form action="/blog/post/{{post_id}}/delete" method="POST">
+        <a href="/blog/post/{{post_id}}/edit" class="btn btn-warning">Edit</a>
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+      </div>
+    {% endif %}
+
+  </div>
+{% endblock %}
