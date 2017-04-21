@@ -20,11 +20,10 @@ class Post(db.Model):
 
     def get_comments(self):
         comments = self.comments
-        comments.order('created')
         if comments.count() == 0:
             return False
         else:
-            return comments
+            return comments.order('created')
 
     @classmethod
     def by_id(cls, uid):
