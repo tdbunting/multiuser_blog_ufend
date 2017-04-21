@@ -19,7 +19,8 @@ class Post(db.Model):
         return re.sub(clean, '', self.content[0:120] + "...")
 
     def get_comments(self):
-        comments = self.comments.order('created')
+        comments = self.comments
+        comments.order('created')
         if comments.count() == 0:
             return False
         else:
