@@ -19,7 +19,11 @@ class Post(db.Model):
         return re.sub(clean, '', self.content[0:120] + "...")
 
     def get_comments(self):
-        return self.comments.order('created')
+        comments = self.comments.order('created')
+        if comments.count() == 0:
+            return False
+        else:
+            return comments
 
     @classmethod
     def by_id(cls, uid):
