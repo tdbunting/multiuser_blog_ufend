@@ -41,14 +41,24 @@ class User(db.Model):
         return "https://github.com%s" % self.github_username
 
 
-    #TODO: FIGURE OUT LIKING
-    def has_liked_post(self, post):
-        like = post.likes.filter("user =", self.key())
+    #TODO: FIGURE OUT BETTER WAY OF LIKING
+    def has_liked_post(self, post_key):
+        like = self.likes.filter("post =", post_key)
 
         if like.count() == 0:
             return False
         else:
+            # print(like[0])
             return True
+
+    def has_liked_post_returns_like(self, post_key):
+        like = self.likes.filter("post =", post_key)
+
+        if like.count() == 0:
+            return False
+        else:
+            print(True)
+            return like[0].key().id()
 
     @classmethod
     def by_id(cls, uid):

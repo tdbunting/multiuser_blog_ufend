@@ -11,4 +11,4 @@ from logout_handler             import LogoutHandler
 from blog_front_page_handler    import BlogFrontPage
 
 from post_comment_handler       import PostCommentHandler
-from like_handler               import LikePost, UnlikePost
+from like_handler               import LikeHandler

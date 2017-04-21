@@ -16,7 +16,7 @@ class Like(db.Model):
     @classmethod
     def by_id(cls, uid):
         return Like.get_by_id(uid)
-
+    
     @classmethod
     def delete(cls, id):
         like = Like.by_id(int(id))

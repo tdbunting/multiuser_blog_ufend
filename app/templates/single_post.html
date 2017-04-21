@@ -2,6 +2,7 @@
 {% block content %}
   <div class="row">
     {% set post_id = post.key().id() %}
+    {% set post_key = post.key() %}
     <div class="blog-post col-md-10 offset-md-1">
       <h2 class="blog-post-title">{{post.subject}}</h2>
       <p class="blog-post-meta">{{post.created.strftime("%b %d, %Y")}} by <a href="#">{{post.author.username}}</a> {{post.likes.count()}} Likes</p>
@@ -22,8 +23,8 @@
       </div>
     {% elif logged_in %}
       <div class="col-6 col-sm-5 text-right">
-        {% if user.has_liked_post(post) %}
-          <form action="/blog/post/{{post_id}}/unlike" method="POST">
+        {% if user.has_liked_post(post_key) %}
+          <form action="/blog/post/{{post_id}}/like" method="POST">
               <button class="btn btn-default">Unlike</button>
           </form>
         {% else %}

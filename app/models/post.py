@@ -23,7 +23,6 @@ class Post(db.Model):
 
     @classmethod
     def by_id(cls, uid):
-        # print(int(uid))
         return Post.get_by_id(uid)
 
 
