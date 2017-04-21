@@ -5,14 +5,15 @@
 
   {% for post in posts %}
     {% set post_id = post.key().id() %}
-    <div class="card">
+    <div class="card col-md-10 offset-md-1">
       <div class="card-block">
         <h4 class="card-title">{{post.subject}}</h4>
-        <h6 class="card-subtitle mb-2 text-muted">{{post.created.strftime("%b %d, %Y")}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">{{post.created.strftime("%b %d, %Y")}} by <a href="#">{{post.author.username}}</a></h6>
         <p class="card-text">{{post.snippet() | safe}}</p>
         <a href="/blog/post/{{post_id}}" class="card-link">Go to article</a>
       </div>
     </div>
+
 
   {% endfor %}
 

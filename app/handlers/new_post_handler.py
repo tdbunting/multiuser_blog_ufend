@@ -6,17 +6,22 @@ class NewPostPage(BlogHandler):
         if self.user:
             self.render("new_post.html", logged_in=self.logged_in)
         else:
-            self.redirect("/login")
+            message = "Must be logged in to create a blog post."
+            self.redirect("/login?error=%s" % message)
 
     def post(self):
         subject = self.request.get("subject")
         content = self.request.get('content')
-        author = self.user
-        print(author)
-        if subject and content:
-            p = Post(subject=subject, content=content, author=author)
-            p_key = p.put()
-            self.redirect("/blog/post/%d" % p_key.id())
+        if self.user:
+            author = self.user
+            if subject and content:
+                p = Post(subject=subject, content=content, author=author)
+                p_key = p.put()
+                message = "Post Created Successfully!"
+                self.redirect("/blog/post/%d?success=%s" % (p_key.id(), message))
+            else:
+                error = "we need both a subject and the content"
+                self.render("new_entry.html", subject=subject, content=content, error=error)
         else:
-            error = "we need both a subject and the content"
-            self.render("new_entry.html", subject=subject, content=content, error=error)
+                error = "we need both a subject and the content"
+                self.render("login.html", error=error)

@@ -1,4 +1,5 @@
 import time
+import re
 from google.appengine.ext import db
 from user import User
 
@@ -10,14 +11,19 @@ class Post(db.Model):
                                   collection_name='posts',
                                   required=True)
     def snippet(self):
+        """ returns a 120 char snippet without any html styling """
+        clean = re.compile('<.*?>')
         if len(self.content) < 120:
-            return self.content
+            return re.sub(clean, '', self.content)
 
-        return self.content[0:120] + "..."
+        return re.sub(clean, '', self.content[0:120] + "...")
+
+    def get_comments(self):
+        return self.comments.order('created')
 
     @classmethod
     def by_id(cls, uid):
-        print(int(uid))
+        # print(int(uid))
         return Post.get_by_id(uid)
 
 

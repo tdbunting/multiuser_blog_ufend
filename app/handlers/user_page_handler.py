@@ -10,6 +10,6 @@ class UserPage(BlogHandler):
             else:
                 posts = None
 
-            self.render('welcome.html', logged_in=self.logged_in, user = self.user, posts=posts)
+            self.render('user_page.html', logged_in=self.logged_in, user = self.user, posts=posts, message=self.message)
         else:
             self.redirect('/signup')

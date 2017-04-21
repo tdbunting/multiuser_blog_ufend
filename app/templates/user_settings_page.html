@@ -1,0 +1,79 @@
+{% extends "app.html" %}
+
+{% block content %}
+<div class="col-md-6 offset-md-3">
+  <h2>Edit Settings</h2>
+    <form method="post">
+
+      {% if error_username %}
+        {% set username_class = "has-danger" %}
+      {% endif %}
+      <div class="form-group {{username_class}}">
+        <label class="form-control-label" for="username">Username</label>
+        <input name="username" type="text" class="form-control" id="username" placeholder="Username">
+        <div class="form-control-feedback">{{error_username}}</div>
+      </div>
+
+      {% if error_email %}
+        {% set email_class = "has-danger" %}
+      {% endif %}
+      <div class="form-group {{email_class}}">
+        <label class="form-control-label" for="email">Email Address</label>
+        <input name="email" type="text" class="form-control" id="email" placeholder="Email Address">
+        <div class="form-control-feedback">{{error_email}}</div>
+      </div>
+
+      <div class="form-group">
+
+        <a href="https://en.gravatar.com/site/signup/" class="btn-sm btn-default" target="newtab">
+          <img src="{{user.gravatar(60)}}" alt="Profile Picture">
+          <br>Edit Gravatar
+        </a>
+      </div>
+      {% if error_password %}
+        {% set password_class = "has-danger" %}
+      {% endif %}
+      <div class="form-group {{password_class}}">
+        <label class="form-control-label" for="password">Password</label>
+        <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+        <div class="form-control-feedback">{{error_password}}</div>
+      </div>
+
+      {% if error_password %}
+        {% set verify_class = "has-danger" %}
+      {% endif %}
+      <div class="form-group {{verify_class}}">
+
+        <input name="verify" type="password" class="form-control" id="verify" placeholder="Verify Password">
+        <div class="form-control-feedback">{{error_verify}}</div>
+      </div>
+
+      <h4>Social Links</h4>
+      <div class="form-group" id="add-social-media">
+        <label class="form-control-label" for="facebook-username">Facebook</label>
+        <input name="facebook-username" type="text" class="form-control" id="facebook-username" placeholder="Facebook Username">
+      </div>
+      <div class="form-group">
+        <label class="form-control-label" for="twitter-username">Twitter</label>
+        <input name="twitter-username" type="text" class="form-control" id="twitter-username" placeholder="Twitter Username">
+      </div>
+      <div class="form-group">
+        <label class="form-control-label" for="username">Instagram</label>
+        <input name="instagram-username" type="text" class="form-control" id="instagram-username" placeholder="Instagram Username">
+      </div>
+      <div class="form-group">
+        <label class="form-control-label" for="github-username">Github</label>
+        <input name="github-username" type="text" class="form-control" id="github-username" placeholder="GitHub Username">
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <a href="/user" class="btn btn-danger">Cancel</a>
+        </div>
+        <div class="col-6 text-right">
+          <button type="submit" class="btn btn-success">Save Changes</button>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock %}

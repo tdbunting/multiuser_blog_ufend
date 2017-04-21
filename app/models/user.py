@@ -5,6 +5,7 @@ import hashlib
 import hmac
 
 from google.appengine.ext import db
+# from google.appengine.api import search
 
 def users_key(group='default'):
     return db.Key.from_path('users', group)
@@ -14,12 +15,40 @@ class User(db.Model):
     email = db.StringProperty(required = True)
     password_hash = db.StringProperty(required = True)
 
+    #social media links
+    facebook_username = db.StringProperty()
+    twitter_username = db.StringProperty()
+    github_username = db.StringProperty()
+    instagram_username = db.StringProperty()
+
     def gravatar(self, size):
         # create hash for gravatar
         email_hash = hashlib.md5(self.email.lower()).hexdigest()
         # construct the url
         gravatar_url = "https://www.gravatar.com/avatar/%s?s=%d" % (email_hash, size)
         return gravatar_url
+
+    def facebook_link(self):
+        return "https://www.facebook.com/%s" % self.facebook_username
+
+    def twitter_link(self):
+        return "https://twitter.com/%s" % self.twitter_link
+
+    def instagram_link(self):
+        return "https://www.instagram.com/%s" % self.instagram_username
+
+    def github_link(self):
+        return "https://github.com%s" % self.github_username
+
+
+    #TODO: FIGURE OUT LIKING
+    def has_liked_post(self, post):
+        like = post.likes.filter("user =", self.key())
+
+        if like.count() == 0:
+            return False
+        else:
+            return True
 
     @classmethod
     def by_id(cls, uid):

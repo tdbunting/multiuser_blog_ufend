@@ -1,11 +1,10 @@
 {% extends "app.html" %}
 {% block content %}
-
   <div class="row">
     {% set post_id = post.key().id() %}
     <div class="blog-post col-md-10 offset-md-1">
       <h2 class="blog-post-title">{{post.subject}}</h2>
-      <p class="blog-post-meta">{{post.created.strftime("%b %d, %Y")}} by <a href="#">{{post.author.username}}</a></p>
+      <p class="blog-post-meta">{{post.created.strftime("%b %d, %Y")}} by <a href="#">{{post.author.username}}</a> {{post.likes.count()}} Likes</p>
       <p>{{post.content | safe}}</p>
     </div><!-- /.blog-post -->
   </div>
@@ -14,14 +13,60 @@
     <div class="col-6 col-sm-5 offset-sm-1">
       <a href="/blog" class="btn btn-primary">Back</a>
     </div>
-    {% if can_edit %}
+    {% if logged_in and can_edit %}
       <div class="col-6 col-sm-5 text-right">
       <form action="/blog/post/{{post_id}}/delete" method="POST">
         <a href="/blog/post/{{post_id}}/edit" class="btn btn-warning">Edit</a>
         <button type="submit" class="btn btn-danger">Delete</button>
       </form>
       </div>
+    {% elif logged_in %}
+      <div class="col-6 col-sm-5 text-right">
+        {% if user.has_liked_post(post) %}
+          <form action="/blog/post/{{post_id}}/unlike" method="POST">
+              <button class="btn btn-default">Unlike</button>
+          </form>
+        {% else %}
+          <form action="/blog/post/{{post_id}}/like" method="POST">
+            <button class="btn btn-default">Like</button>
+          </form>
+        {% endif %}
+
+        </form>
+      </div>
+
     {% endif %}
 
   </div>
+  <div class="row">
+    <div class="col-md-10 offset-md-1 post-comments">
+      <h2>Comments:</h2>
+      <hr/>
+      {% if comments.count() == 0 %}
+        <h3>This Post Has No Comments.</h3>
+      {% endif %}
+      {% for comment in comments %}
+        <div class="row col-12 comment">
+          <div class="col-2 col-sm-1">
+            <img class="rounded-circle" src="{{comment.user.gravatar(40)}}" alt="">
+          </div>
+          <div class="col-10 col-sm-11">
+            <h6 class="comment-user">{{comment.user.username}}</h6>
+            <p class="comment-body">{{comment.comment}}</p>
+          </div>
+        </div>
+      {% endfor %}
+      {% if logged_in %}
+        <div class="row comment-box">
+          <form action="/blog/post/{{post.key().id()}}/comment" method="post" class="col-12 text-right">
+            <div class="form-group">
+              <textarea name="comment" rows="3">{{comment}}</textarea>
+            </div>
+            <button class="btn btn-primary">Post Comment</button>
+          </form>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
 {% endblock %}
