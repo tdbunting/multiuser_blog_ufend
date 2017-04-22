@@ -19,11 +19,11 @@ class Post(db.Model):
         return re.sub(clean, '', self.content[0:120] + "...")
 
     def get_comments(self):
-        comments = self.comments
+        comments = db.GqlQuery("SELECT * FROM Comment WHERE post = :1 ORDER BY created", self.key())
         if comments.count() == 0:
             return False
         else:
-            return comments.order('created')
+            return comments
 
     @classmethod
     def by_id(cls, uid):

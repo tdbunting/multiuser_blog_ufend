@@ -13,10 +13,15 @@ indexes:
 - kind: Comment
   properties:
   - name: post
-  - name: created
-    direction: desc
+  - name: ASC
 
 - kind: Comment
   properties:
   - name: post
   - name: created
+
+- kind: Comment
+  properties:
+  - name: post
+  - name: created
+    direction: desc
