@@ -7,7 +7,6 @@ import webapp2
 import hmac
 
 from app.models.user import User
-from google.appengine.ext import db
 
 template_dir = os.path.join(os.path.dirname(__file__), '../templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
@@ -70,7 +69,8 @@ class BlogHandler(webapp2.RequestHandler):
 
     def initialize(self, *a, **kw):
         webapp2.RequestHandler.initialize(self, *a, **kw)
-        #on every page render we check if there is an alert message to display and builds alert object
+        # on every page render we check if there is an alert
+        # message to display and builds alert object
         self.message = self.message_builder()
 
 

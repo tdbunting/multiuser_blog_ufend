@@ -10,9 +10,9 @@ class DeletePostHandler(BlogHandler):
                 self.redirect("/user?success=%s" % message)
             else:
                 self.render("/blog/post/" + post_id,
-                        logged_in=self.logged_in,
-                        subject=post.subject,
-                        content=post.content)
+                            logged_in=self.logged_in,
+                            subject = post.subject,
+                            content = post.content)
         else:
             message = "You must be logged in to delete a post."
             self.redirect('/login?error=%s' % message)

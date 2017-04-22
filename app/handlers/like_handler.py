@@ -10,7 +10,6 @@ class LikeHandler(BlogHandler):
 
         # if the post doesnt exist no use in running anything else
         if not post:
-            print("not a valid post")
             self.error(404)
 
         if self.user:
@@ -20,25 +19,23 @@ class LikeHandler(BlogHandler):
 
             # if the user owns the current post they cannot like it
             if self.user.username == post.author.username:
-                message="cannot like your own post"
+                message = "cannot like your own post"
                 self.redirect("/blog/post/%d?error=%s" % (post_id, message))
 
             # if the user has already liked the post, we "unlike" the post
             elif like_id:
                 delete_success = Like.delete(int(like_id))
-                print(delete_success)
                 if delete_success:
                     message = "Post unliked"
                     self.redirect("/blog/post/%d?success=%s" % (post_id, message))
                 else:
                     message = "something went wrong unliking this post"
                     self.redirect("/blog/post/%d?error=%s" % (post_id, message))
-                    print("unliking Now %s" % likes.count())
 
             # go ahead and like the post
             else:
                 like = Like(user=self.user, post=post)
-                message= "Post Liked"
+                message = "Post Liked"
                 like.put()
                 time.sleep(0.2)
                 self.redirect('/blog/post/%d?success=%s' % (post_id, message))

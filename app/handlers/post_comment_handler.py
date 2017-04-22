@@ -11,10 +11,10 @@ class PostCommentHandler(BlogHandler):
         post = Post.by_id(int(post_id))
         comment = self.request.get("comment")
         user = self.user
-        # print(post.subject)
+        
         if post and comment and user:
-            c = Comment(post=post, comment=comment, user=user)
-            c_key = c.put()
+            comment = Comment(post=post, comment=comment, user=user)
+            comment.put()
             time.sleep(0.2)
             self.redirect("/blog/post/" + post_id)
         else:

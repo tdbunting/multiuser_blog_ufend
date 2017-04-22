@@ -1,11 +1,8 @@
 import random
 import string
-import urllib
 import hashlib
-import hmac
 
 from google.appengine.ext import db
-# from google.appengine.api import search
 
 def users_key(group='default'):
     return db.Key.from_path('users', group)
@@ -40,25 +37,20 @@ class User(db.Model):
     def github_link(self):
         return "https://github.com%s" % self.github_username
 
-
-    #TODO: FIGURE OUT BETTER WAY OF LIKING
     def has_liked_post(self, post_key):
         like = self.likes.filter("post =", post_key)
 
-        if like.count() == 0:
-            return False
-        else:
-            # print(like[0])
+        if like.count() > 0:
             return True
+        return False
 
     def has_liked_post_returns_like(self, post_key):
         like = self.likes.filter("post =", post_key)
 
-        if like.count() == 0:
-            return False
-        else:
-            print(True)
+        if like.count() > 0:
             return like[0].key().id()
+        return False
+
 
     @classmethod
     def by_id(cls, uid):
@@ -72,7 +64,7 @@ class User(db.Model):
     @classmethod
     def register(cls, username, password, email=None):
         password_hash = make_password_hash(username, password)
-        return User(parent=users_key(),username=username, email=email, password_hash=password_hash)
+        return User(parent=users_key(), username=username, email=email, password_hash=password_hash)
 
     @classmethod
     def login(cls, username, password):

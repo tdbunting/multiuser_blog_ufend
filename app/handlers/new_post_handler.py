@@ -15,13 +15,13 @@ class NewPostPage(BlogHandler):
         if self.user:
             author = self.user
             if subject and content:
-                p = Post(subject=subject, content=content, author=author)
-                p_key = p.put()
+                post = Post(subject=subject, content=content, author=author)
+                post_key = post.put()
                 message = "Post Created Successfully!"
-                self.redirect("/blog/post/%d?success=%s" % (p_key.id(), message))
+                self.redirect("/blog/post/%d?success=%s" % (post_key.id(), message))
             else:
                 error = "we need both a subject and the content"
                 self.render("new_entry.html", subject=subject, content=content, error=error)
         else:
-                error = "we need both a subject and the content"
-                self.render("login.html", error=error)
+            error = "we need both a subject and the content"
+            self.render("login.html", error=error)

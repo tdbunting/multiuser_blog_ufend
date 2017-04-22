@@ -4,7 +4,7 @@ from app.models import Post
 class EditPostPage(BlogHandler):
     def get(self, post_id):
         if not self.user:
-            error="You must be logged in to edit a post."
+            error = "You must be logged in to edit a post."
             self.redirect("/login?error=" + error)
 
         post = Post.by_id(int(post_id))
@@ -28,13 +28,13 @@ class EditPostPage(BlogHandler):
         content = self.request.get('content')
 
         post = Post.edit(id=int(post_id),
-                  subject = subject,
-                  content = content,
-                  user = self.user)
+                         subject=subject,
+                         content=content,
+                         user=self.user)
 
         if post:
             success_message = "Blog post was successfully updated."
-            self.redirect("/blog/post/%s?success=%s" % (post_id, success_message) )
+            self.redirect("/blog/post/%s?success=%s" % (post_id, success_message))
         else:
             self.render("edit_post.html",
                         logged_in=self.logged_in,

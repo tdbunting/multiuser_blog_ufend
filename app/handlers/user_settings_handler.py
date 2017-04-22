@@ -9,8 +9,3 @@ class UserSettingsPage(BlogHandler):
             self.render('user_settings_page.html', logged_in=self.logged_in, user=self.user)
         else:
             self.redirect('/login')
-
-    # def post(self):
-    #     if self.user:
-    #         user = self.user
-    #         user.edit()

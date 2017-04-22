@@ -57,7 +57,6 @@ class SignupPage(Register):
 
             self.login(user)
             self.redirect('/user')
-        # logging.debug(user)
 
 
 # Validation Functions
@@ -65,23 +64,19 @@ class SignupPage(Register):
 def verify_username(username):
     if USER_REX.match(username):
         return username
-    else:
-        return False
+    return False
 
 def verify_email(email):
     if EMAIL_REX.match(email):
         return email
-    else:
-        return False
+    return False
 
 def verify_password(password):
     if PASSWORD_REX.match(password):
         return password
-    else:
-        return False
+    return False
 
 def verify_verification(password, password_verification):
     if password == password_verification:
         return True
-    else:
-        return False
+    return False
