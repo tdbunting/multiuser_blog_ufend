@@ -19,9 +19,12 @@ indexes:
   properties:
   - name: post
   - name: created
+<<<<<<< HEAD
 
 - kind: Comment
   properties:
   - name: post
   - name: created
     direction: desc
+=======
+>>>>>>> 26e2b62ba0a0659150c931a8507b77fe699a49b3
